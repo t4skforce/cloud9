@@ -1,7 +1,7 @@
 FROM node:slim
 
-ARG USER=cloud
-ARG GROUP=cloud
+ARG USER=cloud9
+ARG GROUP=cloud9
 ENV UID 1000
 ENV GID 1000
 ENV HOME "/workspace"
@@ -25,8 +25,10 @@ RUN buildDeps='make build-essential g++ gcc' \
  && git reset --hard \
  && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers \
  && mkdir -p ${HOME} \
+ && deluser --remove-home node \
+ && groupdel node \
  && groupadd --system --gid ${GID} ${GROUP} \
- && useradd --system --uid ${UID} -g ${GROUP} ${USER} --home ${HOME} \
+ && useradd --system --uid ${UID} -g ${GROUP} ${USER} --shell /bin/bash --home ${HOME} \
  && usermod -aG sudo ${USER} \
  && echo "${USER}:$(openssl rand 512 | openssl sha256 | awk '{print $2}')" | chpasswd \
  && chown -R ${USER}:${GROUP} ${HOME} \
