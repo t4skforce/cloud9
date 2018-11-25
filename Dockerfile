@@ -2,9 +2,10 @@ FROM node:slim
 
 ARG USER=cloud9
 ARG GROUP=cloud9
-ENV UID=1000
-ENV GID=1000
-ENV HOME=/workspace
+ENV UID 1000
+ENV GID 1000
+ENV HOME "/workspace"
+ENV PORT 8181
 
 RUN buildDeps='make build-essential g++ gcc' 
  && softDeps="sudo tmux git ssh python python3 python-pip python3-pip" \
@@ -20,6 +21,7 @@ RUN buildDeps='make build-essential g++ gcc'
  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
  && npm cache clean --force \
  && git reset --hard \
+ && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers \
  && mkdir -p ${HOME} \
  && groupadd --system --gid ${APPGID} ${GROUP} \
  && useradd --system --uid ${APPUID} -g ${GROUP} ${USER} --home ${HOME} \
@@ -27,11 +29,9 @@ RUN buildDeps='make build-essential g++ gcc'
  && echo "${USER}:$(openssl rand 512 | openssl sha256 | awk '{print $2}')" | chpasswd \
  && chown -R ${USER}:${GROUP} ${HOME}
  
-COPY docker-entrypoint.sh /usr/local/bin/
-RUN ln -s usr/local/bin/docker-entrypoint.sh / # backwards compat
-
 VOLUME ${HOME}
-EXPOSE 8181
+EXPOSE ${PORT}
 
-ENTRYPOINT ["docker-entrypoint.sh"]
+USER ${USER}
+ENTRYPOINT ["forever", "/cloud9/server.js", "-w", "${HOME}", "-p", "${PORT}", "--listen", "0.0.0.0"]
 CMD ["--auth","c9:c9"]
