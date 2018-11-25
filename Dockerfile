@@ -31,9 +31,8 @@ RUN buildDeps='make build-essential g++ gcc' \
  && usermod -aG sudo ${USER} \
  && echo "${USER}:$(openssl rand 512 | openssl sha256 | awk '{print $2}')" | chpasswd \
  && chown -R ${USER}:${GROUP} ${HOME} \
- && chmod +x docker-entrypoint.sh
+ && chmod +x /docker-entrypoint.sh
  
-COPY ./docker-entrypoint.sh /
 VOLUME ${HOME}
 EXPOSE ${PORT}
 
