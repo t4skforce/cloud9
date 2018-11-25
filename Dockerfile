@@ -7,7 +7,7 @@ ENV GID 1000
 ENV HOME "/workspace"
 ENV PORT 8181
 
-RUN buildDeps='make build-essential g++ gcc' 
+RUN buildDeps='make build-essential g++ gcc' \
  && softDeps="sudo tmux git ssh python python3 python-pip python3-pip" \
  && apt-get update && apt-get upgrade -y \
  && apt-get install -y $buildDeps $softDeps \
