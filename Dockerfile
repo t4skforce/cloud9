@@ -26,7 +26,6 @@ RUN buildDeps='make build-essential g++ gcc' \
  && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers \
  && mkdir -p ${HOME} \
  && deluser --remove-home node \
- && groupdel node \
  && groupadd --system --gid ${GID} ${GROUP} \
  && useradd --system --uid ${UID} -g ${GROUP} ${USER} --shell /bin/bash --home ${HOME} \
  && usermod -aG sudo ${USER} \
