@@ -23,8 +23,8 @@ RUN buildDeps='make build-essential g++ gcc' \
  && git reset --hard \
  && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers \
  && mkdir -p ${HOME} \
- && groupadd --system --gid ${APPGID} ${GROUP} \
- && useradd --system --uid ${APPUID} -g ${GROUP} ${USER} --home ${HOME} \
+ && groupadd --system --gid ${GID} ${GROUP} \
+ && useradd --system --uid ${UID} -g ${GROUP} ${USER} --home ${HOME} \
  && usermod -aG sudo ${USER} \
  && echo "${USER}:$(openssl rand 512 | openssl sha256 | awk '{print $2}')" | chpasswd \
  && chown -R ${USER}:${GROUP} ${HOME}
