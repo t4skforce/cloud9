@@ -6,6 +6,7 @@ ENV UID 1000
 ENV GID 1000
 ENV HOME "/workspace"
 ENV PORT 8181
+ENV ROOT_CA ""
 
 RUN buildDeps='make build-essential g++ gcc' \
  && softDeps="sudo tmux git ssh python python3 python-pip python3-pip" \
