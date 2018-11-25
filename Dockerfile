@@ -8,6 +8,7 @@ ENV HOME "/workspace"
 ENV PORT 8181
 ENV ROOT_CA ""
 
+COPY ./docker-entrypoint.sh /
 RUN buildDeps='make build-essential g++ gcc' \
  && softDeps="sudo tmux git ssh python python3 python-pip python3-pip" \
  && apt-get update && apt-get upgrade -y \
@@ -28,11 +29,13 @@ RUN buildDeps='make build-essential g++ gcc' \
  && useradd --system --uid ${UID} -g ${GROUP} ${USER} --home ${HOME} \
  && usermod -aG sudo ${USER} \
  && echo "${USER}:$(openssl rand 512 | openssl sha256 | awk '{print $2}')" | chpasswd \
- && chown -R ${USER}:${GROUP} ${HOME}
+ && chown -R ${USER}:${GROUP} ${HOME} \
+ && chmod +x docker-entrypoint.sh
  
+
 VOLUME ${HOME}
 EXPOSE ${PORT}
 
 USER ${USER}
-ENTRYPOINT ["forever", "/cloud9/server.js", "-w", "${HOME}", "-p", "${PORT}", "--listen", "0.0.0.0"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["--auth","c9:c9"]
