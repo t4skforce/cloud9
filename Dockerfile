@@ -1,7 +1,7 @@
 FROM node:slim
 
-ARG USER=cloud9
-ARG GROUP=cloud9
+ARG USER=cloud
+ARG GROUP=cloud
 ENV UID 1000
 ENV GID 1000
 ENV HOME "/workspace"
