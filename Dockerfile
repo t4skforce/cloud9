@@ -4,9 +4,11 @@ ARG USER=cloud9
 ARG GROUP=cloud9
 ENV UID 1000
 ENV GID 1000
+ENV C9PORT 8181
 ENV HOME "/workspace"
-ENV PORT 8181
 ENV ROOT_CA ""
+ENV PORT 8080
+ENV IP "0.0.0.0"
 
 COPY ./docker-entrypoint.sh /
 RUN buildDeps='make build-essential g++ gcc' \
@@ -34,7 +36,7 @@ RUN buildDeps='make build-essential g++ gcc' \
  && chmod +x /docker-entrypoint.sh
  
 VOLUME ${HOME}
-EXPOSE ${PORT}
+EXPOSE ${C9PORT} ${PORT}
 
 USER ${USER}
 ENTRYPOINT ["/docker-entrypoint.sh"]
