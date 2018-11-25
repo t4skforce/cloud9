@@ -1,4 +1,4 @@
-!#/bin/bash
+#!/bin/sh
 
 if [ ! -z "$ROOT_CA" ]; then
   if [ -f "${ROOT_CA}" ]; then
