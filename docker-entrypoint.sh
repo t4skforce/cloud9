@@ -20,4 +20,4 @@ if [ "$(stat -c '%u' ${HOME})" != 1000 ]; then
   chown -R ${UID}:${GID} ${HOME}
 fi
 
-sudo -u "#${UID}" forever -- /cloud9/server.js -w ${HOME} -p ${PORT} --listen 0.0.0.0 $@
+sudo -u "#${UID}" forever -- /cloud9/server.js -w ${HOME} -p ${C9PORT} --listen 0.0.0.0 $@
