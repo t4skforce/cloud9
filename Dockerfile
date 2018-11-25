@@ -33,7 +33,7 @@ RUN buildDeps='make build-essential g++ gcc' \
  && chown -R ${USER}:${GROUP} ${HOME} \
  && chmod +x docker-entrypoint.sh
  
-
+COPY ./docker-entrypoint.sh /
 VOLUME ${HOME}
 EXPOSE ${PORT}
 
