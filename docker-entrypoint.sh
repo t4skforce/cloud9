@@ -3,7 +3,7 @@
 if [ ! -z "$ROOT_CA" ]; then
   if [ -f "${ROOT_CA}" ]; then
     if [ ! -f '/usr/local/share/ca-certificates/ca.crt' ]; then
-      cp "${ROOT_CA}" '/usr/local/share/ca-certificates/ca.crt'
+      cp "${ROOT_CA}" '/usr/local/share/ca-certificates/'
       update-ca-certificates
       echo "CA '${ROOT_CA}' installed successfully."
     else
