@@ -10,7 +10,7 @@ ENV ROOT_CA ""
 
 COPY ./docker-entrypoint.sh /
 RUN buildDeps='make build-essential g++ gcc' \
- && softDeps="sudo tmux git ssh python python3 python-pip python3-pip" \
+ && softDeps="sudo tmux git ssh htop iftop python python3 python-pip python3-pip" \
  && apt-get update && apt-get upgrade -y \
  && apt-get install -y $buildDeps $softDeps \
  && pip install tox \
@@ -30,7 +30,7 @@ RUN buildDeps='make build-essential g++ gcc' \
  && useradd --system --uid ${UID} -g ${GROUP} ${USER} --shell /bin/bash --home ${HOME} \
  && usermod -aG sudo ${USER} \
  && echo "${USER}:$(openssl rand 512 | openssl sha256 | awk '{print $2}')" | chpasswd \
- && chown -R ${USER}:${GROUP} ${HOME} \
+ && chown -R ${USER}:${GROUP} ${HOME} /cloud9 \
  && chmod +x /docker-entrypoint.sh
  
 VOLUME ${HOME}
