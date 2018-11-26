@@ -13,11 +13,11 @@ if [ ! -z "$ROOT_CA" ]; then
     echo "file '${ROOT_CA}' does not exist!"
   fi
 fi
-if [ "$(stat -c '%u' /cloud9)" != 1000 ]; then
+if [[ "$(stat -c '%u' /cloud9)" != "${UID}" ]]; then
   chown -R ${UID}:${GID} /cloud9
 fi
-if [ "$(stat -c '%u' ${HOME})" != 1000 ]; then
+if [[ "$(stat -c '%u' ${HOME})" != "${UID}" ]]; then
   chown -R ${UID}:${GID} ${HOME}
 fi
-
-sudo -u "#${UID}" forever -- /cloud9/server.js -w ${HOME} -p ${C9PORT} --listen 0.0.0.0 $@
+export NODE_ENV='production'
+sudo --preserve-env -u "#${UID}" forever -- /cloud9/server.js -w ${HOME} -p ${C9PORT} --listen 0.0.0.0 $@
