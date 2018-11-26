@@ -1,3 +1,6 @@
+jedi
 tox
 pylint
+pylint-flask
+pylint-django
 flake8
