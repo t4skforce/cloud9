@@ -28,7 +28,7 @@ RUN buildDeps='make build-essential g++ gcc' \
  && apt-get autoremove -y && apt-get autoclean -y && apt-get clean -y \
  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
  && npm cache clean --force \
- && git reset --hard \
+ && cd /cloud9 && git reset --hard \
  && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers \
  && mkdir -p ${HOME} \
  && deluser --remove-home node \
