@@ -13,7 +13,7 @@ ENV IP "0.0.0.0"
 COPY ./docker-entrypoint.sh /
 COPY ./requirements.txt /tmp/
 RUN buildDeps='make build-essential g++ gcc' \
- && softDeps="sudo tmux git ssh htop iftop net-tools python python3 python-pip python3-pip" \
+ && softDeps="sudo tmux git ssh htop iftop net-tools python python3 python-virtualenv python3-virtualenv python-pip python3-pip" \
  && apt-get update && apt-get upgrade -y \
  && apt-get install -y $buildDeps $softDeps \
  && pip install -r /tmp/requirements.txt \
