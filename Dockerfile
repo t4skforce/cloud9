@@ -1,4 +1,4 @@
-FROM node:slim
+FROM node:latest
 
 ARG USER=cloud9
 ARG GROUP=cloud9
@@ -13,14 +13,15 @@ ENV IP "0.0.0.0"
 COPY ./docker-entrypoint.sh /
 COPY ./requirements.txt /tmp/
 RUN buildDeps='make build-essential g++ gcc' \
- && softDeps="sudo tmux git ssh htop iftop net-tools python python3 python-virtualenv python3-virtualenv python-pip python3-pip" \
+ && softDeps='sudo tmux git ssh htop iftop net-tools python python3 python-virtualenv python3-virtualenv python-pip python3-pip' \
  && apt-get update && apt-get upgrade -y \
  && apt-get install -y $buildDeps $softDeps \
- && pip install -r /tmp/requirements.txt \
- && pip3 install -r /tmp/requirements.txt \
  && npm install -g forever && npm cache clean --force \
  && git clone --depth=5 https://github.com/c9/core.git /cloud9 && cd /cloud9 \
  && scripts/install-sdk.sh \
+ && sed -i -e 's_127.0.0.1_0.0.0.0_g' /cloud9/configs/standalone.js \
+ && pip install -r /tmp/requirements.txt \
+ && pip3 install -r /tmp/requirements.txt \
  && apt-get purge -y --auto-remove $buildDeps \
  && apt-get autoremove -y && apt-get autoclean -y && apt-get clean -y \
  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
