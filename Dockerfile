@@ -21,7 +21,9 @@ RUN buildDeps='make build-essential g++ gcc' \
  && scripts/install-sdk.sh \
  && sed -i -e 's_127.0.0.1_0.0.0.0_g' /cloud9/configs/standalone.js \
  && pip install -r /tmp/requirements.txt \
+ && mkdir -p /mnt/shared/lib/python2 && /usr/bin/python2 -m virtualenv --python /usr/bin/python2 /mnt/shared/lib/python2 && source /mnt/shared/lib/python2/bin/activate && pip install --upgrade jedi pylint pylint-flask pylint-django && deactivate && chown -R ${UID}:${GID} /mnt/shared/lib/python2 \
  && pip3 install -r /tmp/requirements.txt \
+ && mkdir -p /mnt/shared/lib/python3 && /usr/bin/python3 -m virtualenv --python /usr/bin/python3 /mnt/shared/lib/python3 && source /mnt/shared/lib/python3/bin/activate && pip install --upgrade jedi pylint pylint-flask pylint-django && deactivate && chown -R ${UID}:${GID} /mnt/shared/lib/python3 \
  && apt-get purge -y --auto-remove $buildDeps \
  && apt-get autoremove -y && apt-get autoclean -y && apt-get clean -y \
  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
@@ -41,5 +43,5 @@ VOLUME ${HOME}
 EXPOSE ${C9PORT} ${PORT}
 
 USER ${USER}
-ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD ["--auth","c9:c9"]
+ENTRYPOINT [ "/docker-entrypoint.sh" ]
+CMD [ "--auth", "c9:c9", "--packed", "--useBrowserCache" ]
