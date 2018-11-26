@@ -23,7 +23,7 @@ RUN buildDeps='make build-essential g++ gcc' \
  && pip install -r /tmp/requirements.txt \
  && mkdir -p /mnt/shared/lib/python2 && /usr/bin/python2 -m virtualenv --python /usr/bin/python2 /mnt/shared/lib/python2 && cd /mnt/shared/lib/python2/ && . bin/activate && pip install --upgrade jedi pylint pylint-flask pylint-django && deactivate && chown -R ${UID}:${GID} /mnt/shared/lib/python2 \
  && pip3 install -r /tmp/requirements.txt \
- && mkdir -p /mnt/shared/lib/python3 && /usr/bin/python3 -m virtualenv --python /usr/bin/python3 /mnt/shared/lib/python3 && /mnt/shared/lib/python3/ && . bin/activate && pip install --upgrade jedi pylint pylint-flask pylint-django && deactivate && chown -R ${UID}:${GID} /mnt/shared/lib/python3 \
+ && mkdir -p /mnt/shared/lib/python3 && /usr/bin/python3 -m virtualenv --python /usr/bin/python3 /mnt/shared/lib/python3 && cd /mnt/shared/lib/python3/ && . bin/activate && pip install --upgrade jedi pylint pylint-flask pylint-django && deactivate && chown -R ${UID}:${GID} /mnt/shared/lib/python3 \
  && apt-get purge -y --auto-remove $buildDeps \
  && apt-get autoremove -y && apt-get autoclean -y && apt-get clean -y \
  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
