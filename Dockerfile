@@ -11,12 +11,13 @@ ENV PORT 8080
 ENV IP "0.0.0.0"
 
 COPY ./docker-entrypoint.sh /
+COPY ./requirements.txt /tmp/
 RUN buildDeps='make build-essential g++ gcc' \
- && softDeps="sudo tmux git ssh htop iftop python python3 python-pip python3-pip" \
+ && softDeps="sudo tmux git ssh htop iftop net-tools python python3 python-pip python3-pip" \
  && apt-get update && apt-get upgrade -y \
  && apt-get install -y $buildDeps $softDeps \
- && pip install tox \
- && pip3 install tox \
+ && pip install -r /tmp/requirements.txt \
+ && pip3 install -r /tmp/requirements.txt \
  && npm install -g forever && npm cache clean --force \
  && git clone --depth=5 https://github.com/c9/core.git /cloud9 && cd /cloud9 \
  && scripts/install-sdk.sh \
