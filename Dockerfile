@@ -1,4 +1,4 @@
-FROM node:latest
+FROM node:slim
 
 ARG USER=cloud9
 ARG GROUP=cloud9
