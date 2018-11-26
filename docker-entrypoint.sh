@@ -16,6 +16,12 @@ fi
 if [[ "$(stat -c '%u' /cloud9)" != "${UID}" ]]; then
   chown -R ${UID}:${GID} /cloud9
 fi
+if [[ "$(stat -c '%u' /mnt/shared/lib/python2)" != "${UID}" ]]; then
+  chown -R ${UID}:${GID} /mnt/shared/lib/python2
+fi
+if [[ "$(stat -c '%u' /mnt/shared/lib/python3)" != "${UID}" ]]; then
+  chown -R ${UID}:${GID} /mnt/shared/lib/python3
+fi
 if [[ "$(stat -c '%u' ${HOME})" != "${UID}" ]]; then
   chown -R ${UID}:${GID} ${HOME}
 fi
